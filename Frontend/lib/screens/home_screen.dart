@@ -172,7 +172,6 @@ class _HomeScreenState extends State<HomeScreen>
                                   Provider.of<FileState>(context, listen: false)
                                       .selectedItem;
                               if (selectedUserFile != null) {
-                                print(selectedUserFile);
                                 Provider.of<SocketService>(context,
                                         listen: false)
                                     .downloadFile(
@@ -556,8 +555,7 @@ class _HomeScreenState extends State<HomeScreen>
             itemCount: messages.length,
             itemBuilder: (context, index) {
               final message = messages[index];
-              bool isMe = message['sender'] == selectedUser['username'];
-
+              bool isMe = message['sender'] == widget.currentUser['username'];
               return Align(
                 alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                 child: MessageBubble(

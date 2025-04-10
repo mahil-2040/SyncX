@@ -6,8 +6,8 @@ class FileSender {
   final String senderIP;
   final int availablePort;
   final int size;
-  int _resumeOffset = 0; // ✅ Keep track of resume position
-  bool _isPaused = false; // ✅ Track if paused
+  int _resumeOffset = 0;
+  bool _isPaused = false; 
 
   FileSender({required this.filePath, required this.senderIP, required this.availablePort , required this.size});
 
@@ -32,7 +32,7 @@ class FileSender {
         final data = jsonDecode(message);
 
         if (data['type'] == 'resume') {
-          _resumeOffset = data['receivedBytes']; // ✅ Resume from where it left off
+          _resumeOffset = data['receivedBytes']; 
           print("Resuming file transfer from byte $_resumeOffset");
           _sendChunks(ws, file);
         }

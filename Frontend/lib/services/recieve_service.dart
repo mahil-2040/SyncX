@@ -50,22 +50,21 @@ class FileReceiver {
           final fileName = data['fileName'] ?? 'downloaded_file';
           _expectedTotalBytes = data['size'] ?? 0;
           _file = File('${_publicFolder.path}/$fileName');
-          _fileSink = _file!.openWrite(mode: FileMode.append); // ✅ Allow resuming
-          _totalBytesReceived = _file!.existsSync() ? _file!.lengthSync() : 0; // ✅ Start from last saved bytes
+          _fileSink = _file!.openWrite(mode: FileMode.append); 
+          _totalBytesReceived = _file!.existsSync() ? _file!.lengthSync() : 0; 
 
           Provider.of<DownloadProvider>(context, listen: false)
               .addDownload(fileName, _expectedTotalBytes);
 
           print('Receiving file: $fileName from byte $_totalBytesReceived');
           
-          // ✅ Inform sender to start from where it stopped
           _channel!.sink.add(jsonEncode({"type": "resume", "receivedBytes": _totalBytesReceived}));
         } 
         else if (data['type'] == 'fileChunk') {
           final chunk = base64Decode(data['chunk']);
 
           if (_isPaused) {
-            _bufferedChunks.addAll(chunk); // ✅ Store data while paused
+            _bufferedChunks.addAll(chunk); 
             return;
           }
 
