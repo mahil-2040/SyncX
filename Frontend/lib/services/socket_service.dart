@@ -29,7 +29,6 @@ class SocketService with ChangeNotifier {
 
   void connect() {
     if (socket != null && socket!.connected) {
-      // Prevent duplicate connections
       print('Socket already connected: ${socket!.id}');
       return;
     }
